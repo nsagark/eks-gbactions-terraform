@@ -1,16 +1,16 @@
-name: Setup and configure AWS Cluster for ATOS
+name: Setup and configure AWS Cluster for Nirmata
 
 on:
   push:
     branches:
       - main
-      - vra-dev-test
+      - eks-demo
 
 # Global environment variables that are accessable to all jobs
 env:
   ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  REGION: us-east-1
+  REGION: us-west-1
   NIRMATA_KEY: ${{ secrets.NIRMATA_TOKEN }}
 
 jobs:
@@ -19,16 +19,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env: 
-      WORKSPACE_NAME: "vra-dev-test"
-      PROJECT_NAME: "vra-dev-test"
-      VPC_NAME: "vra-dev-test-vpc"
-      SUBNET_NAME: "vra-dev-test-subnet"
-      SUBNET_AZS: "[\"us-east-1a\", \"us-east-1b\"]"
-      IG_NAME: "vra-dev-test-ig"
-      RT_NAME: "vra-dev-test-rt"
-      CLUSTER_RN: "vra-dev-test-cluster-rn"
-      CLUSTER_NAME: "vra-dev-test-cluster"
-      NG_ROLE_NAME: "vra-dev-test-ng-role"
+      WORKSPACE_NAME: "GitHub Actions"
+      PROJECT_NAME: "eks-demo-project"
 
     steps:
 
@@ -58,14 +50,6 @@ jobs:
           echo access_key=\"$ACCESS_KEY\"
           echo secret_key=\"$SECRET_KEY\"
           echo region=\"$REGION\"
-          echo vpc_name=\"$VPC_NAME\"
-          echo subnet_name=\"$SUBNET_NAME\"
-          echo subnet_azs=$SUBNET_AZS
-          echo ig_name=\"$IG_NAME\"
-          echo rt_name=\"$RT_NAME\"
-          echo cluster_name=\"$CLUSTER_NAME\"
-          echo cluster_rn=\"$CLUSTER_RN\"
-          echo ng_role_name=\"$NG_ROLE_NAME\"
         } > terraform.auto.tfvars
         cat terraform.auto.tfvars
         terraform plan
