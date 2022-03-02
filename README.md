@@ -1,6 +1,6 @@
 # eks-gbactions-terraform
 
-This is a sample repository that consists of terraform files which can be used to create eks cluster in Nirmata. Before creating the cluster, make sure the cluster type is already created. The following variables need to be configured as secrets for these TF files to work
+This is a sample repository that consists of terraform files which can be used to create eks cluster in Nirmata. Before creating the cluster, make sure the cluster type is already created. The following variables need to be configured as secrets in github for these TF files to work
 
 
 - AWS_ACCESS_KEY
