@@ -1,0 +1,59 @@
+name: Setup and configure AWS Cluster for Nirmata
+
+on:
+  push:
+    branches:
+      - main
+      - eks-demo
+
+# Global environment variables that are accessable to all jobs
+env:
+  ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+  SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  REGION: us-west-1
+  NIRMATA_KEY: ${{ secrets.NIRMATA_TOKEN }}
+
+jobs:
+  setup-infastructure:
+    name: Building Infastruture
+    runs-on: ubuntu-latest
+
+    env: 
+      WORKSPACE_NAME: "gh-actions-demo"
+      PROJECT_NAME: "eks-demo-project"
+
+    steps:
+
+    - name: Check out source code
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        # terraform_version: 0.13.0
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    
+    - name: Initialize and plan terraform
+      run: |
+        terraform --version
+        cd terraform
+        terraform init
+        terraform validate -no-color
+  
+    - name: Terraform Plan
+      run: |
+        cd terraform
+        {
+          echo nirmata_token=\"$NIRMATA_KEY\"
+          echo project_name=\"$PROJECT_NAME\"
+          echo access_key=\"$ACCESS_KEY\"
+          echo secret_key=\"$SECRET_KEY\"
+          echo region=\"$REGION\"
+        } > terraform.auto.tfvars
+        cat terraform.auto.tfvars
+        terraform plan
+
+    - name: Apply the terraform plan
+      run: |
+        cd terraform
+        terraform apply -auto-approve
