@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env: 
-      WORKSPACE_NAME: "GitHub Actions"
+      WORKSPACE_NAME: "gh-actions-demo"
       PROJECT_NAME: "eks-demo-project"
 
     steps:
