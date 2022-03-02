@@ -56,4 +56,4 @@ jobs:
     - name: Apply the terraform plan
       run: |
         cd terraform
-        terraform apply -auto-approve
+        terraform destroy -auto-approve
