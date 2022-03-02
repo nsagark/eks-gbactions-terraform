@@ -11,4 +11,4 @@ TF_API_TOKEN
 
 The TF_API_TOKEN is generated from Terraform Cloud and NIRMATA_TOKEN can generated from your nirmata profile. The additional resources required to create cluster like Cloud credentials, Cluster type can be created using Nirmata terraform provider as well. 
 
-https://registry.terraform.io/providers/nirmata/nirmata/latest/docs/resources/cluster_type_eks
+https://registry.terraform.io/providers/nirmata/nirmata/latest/docs
